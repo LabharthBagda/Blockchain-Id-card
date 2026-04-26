@@ -1,14 +1,14 @@
-# Blockchain-Based Student ID Card System
+# CertChain - Blockchain Employee ID Card System
 
-A complete web application for issuing and verifying digital student ID cards using blockchain technology.
+A complete web application for issuing and verifying digital employee ID credentials using blockchain technology.
 
 ## Features
 
 - **Admin Authentication**: Secure JWT-based login system
-- **Student Management**: Add, edit, and manage student records
-- **Blockchain ID Cards**: Issue digital ID cards stored on Ethereum-compatible blockchain
+- **Employee Management**: Add, edit, and manage employee records
+- **Blockchain ID Cards**: Issue digital ID credentials stored on Ethereum-compatible blockchain
 - **QR Code Verification**: Generate QR codes for easy verification
-- **Public Verification**: Anyone can verify card authenticity without login
+- **Public Verification**: Anyone can verify credential authenticity without login
 - **Dashboard**: View statistics and manage the system
 - **Blockchain Terminal**: Real-time transaction monitoring
 - **Transaction History**: Visual blockchain activity display
@@ -24,7 +24,7 @@ A complete web application for issuing and verifying digital student ID cards us
 ## Project Structure
 
 ```
-student-id-blockchain/
+employee-id-blockchain/
 ├── blockchain/         # Smart contracts and Hardhat config
 │   ├── contracts/      # Solidity smart contracts
 │   ├── scripts/       # Deployment scripts
@@ -146,23 +146,23 @@ The application will open at `http://localhost:3000`
 
 ### 2. Add a Student
 1. Click "Add Student" in the sidebar
-2. Fill in student details (e.g., Student ID: 123456, Name: John Doe, Department: Computer Science, Course: B.Tech, Year: 1st Year)
+2. Fill in employee details (e.g., Employee ID: 123456, Name: John Doe, Department: Computer Science, Course: B.Tech, Year: 1st Year)
 3. Click "Add Student"
 
-### 3. Issue a Student ID Card
+### 3. Issue a Employee ID Card
 1. Click "Issue Card" in the sidebar
-2. Select a student from the dropdown
+2. Select a employee from the dropdown
 3. Click "Issue Card"
 4. The card is stored on blockchain
 
 ### 4. View Student Card
 1. Go to "Students" in the sidebar
-2. Click "View Card" on any student
+2. Click "View Card" on any employee
 3. See the digital ID card with QR code
 
 ### 5. Verify a Card
 1. Go to "Verify" in the sidebar (or visit `/verify`)
-2. Enter the student ID
+2. Enter the employee ID
 3. Click "Verify" to see if it's valid
 
 ### 6. Monitor Blockchain
@@ -202,17 +202,17 @@ Transactions will be simulated with random hashes.
 - `GET /api/auth/verify` - Verify JWT token
 
 ### Students
-- `GET /api/students` - Get all students
-- `GET /api/students/:id` - Get student by ID
-- `POST /api/students` - Create student
-- `PUT /api/students/:id` - Update student
-- `DELETE /api/students/:id` - Deactivate student
-- `GET /api/students/stats` - Get dashboard stats
+- `GET /api/employees` - Get all employees
+- `GET /api/employees/:id` - Get employee by ID
+- `POST /api/employees` - Create employee
+- `PUT /api/employees/:id` - Update employee
+- `DELETE /api/employees/:id` - Deactivate employee
+- `GET /api/employees/stats` - Get dashboard stats
 
 ### Cards
 - `GET /api/cards` - Get all cards
-- `GET /api/cards/student/:studentId` - Get card by student ID
-- `GET /api/cards/verify/:studentId` - Verify a card (public)
+- `GET /api/cards/employee/:employeeId` - Get card by employee ID
+- `GET /api/cards/verify/:employeeId` - Verify a card (public)
 - `POST /api/cards/issue` - Issue a new card
 - `POST /api/cards/revoke` - Revoke a card
 
@@ -246,7 +246,7 @@ npm install ethers
 
 # Demonstration Section
 
-## Full Demonstration Flow for Your Blockchain-Based Student ID Card System
+## Full Demonstration Flow for Your Blockchain-Based Employee ID Card System
 
 Use this as your **presentation/demo script** once everything is running.
 
@@ -312,7 +312,7 @@ Open the frontend in the browser at `http://localhost:3000`.
 
 This is the user-facing part of the project where you will:
 - show admin login
-- show student list
+- show employee list
 - issue a card
 - verify a card
 
@@ -322,7 +322,7 @@ This is the user-facing part of the project where you will:
 
 You can say:
 
-> "This project is a blockchain-based student ID card system. The admin can manage student records and issue digital student ID cards. The actual proof of issuance is written to a blockchain smart contract. For this demo, I am using a local Ethereum blockchain through Hardhat."
+> "This project is a blockchain-based employee ID card system. The admin can manage employee records and issue digital employee ID cards. The actual proof of issuance is written to a blockchain smart contract. For this demo, I am using a local Ethereum blockchain through Hardhat."
 
 That gives context before showing the technical proof.
 
@@ -335,12 +335,12 @@ That gives context before showing the technical proof.
 In the browser:
 1. Login as admin (admin / admin123)
 2. Go to the "Students" page
-3. Show the existing students
+3. Show the existing employees
 
 This proves the normal application layer is working.
 
 **What to say:**
-> "Here I can see the student records managed by the application. These student details are used when issuing a blockchain-backed student ID card."
+> "Here I can see the employee records managed by the application. These employee details are used when issuing a blockchain-backed employee ID card."
 
 ---
 
@@ -354,17 +354,17 @@ await contract.getTotalCards()
 This should return `0n` or a lower number than after issuance.
 
 **What to say:**
-> "Before issuing a new student ID card, I am checking the smart contract directly. This shows how many cards currently exist on-chain."
+> "Before issuing a new employee ID card, I am checking the smart contract directly. This shows how many cards currently exist on-chain."
 
 This is your **before state**.
 
 ---
 
-### Step C — Issue a Student ID Card
+### Step C — Issue a Employee ID Card
 
 In the web app:
 1. Go to "Issue Card"
-2. Select a student
+2. Select a employee
 3. Click "Issue Card"
 
 Or in the Hardhat console:
@@ -380,7 +380,7 @@ console.log(tx.hash);
 ```
 
 **What to say:**
-> "Now I am issuing a student ID card. This action writes data to the blockchain smart contract."
+> "Now I am issuing a employee ID card. This action writes data to the blockchain smart contract."
 
 ---
 
@@ -437,10 +437,10 @@ Now run:
 await contract.verifyStudentCard("STUDENT_ID")
 ```
 
-This should return the stored blockchain data for that student card.
+This should return the stored blockchain data for that employee card.
 
 **What to say:**
-> "This function reads the student card directly from the blockchain smart contract. So the system can both write and verify the card on-chain."
+> "This function reads the employee card directly from the blockchain smart contract. So the system can both write and verify the card on-chain."
 
 This proves the card is not only issued, but also verifiable.
 
@@ -450,11 +450,11 @@ This proves the card is not only issued, but also verifiable.
 
 In the browser:
 1. Go to "Students"
-2. Click "View Card" on any student
+2. Click "View Card" on any employee
 3. Show the card UI with QR code and blockchain info
 
 **What to say:**
-> "This is the digital student ID card shown in the application. The important point is that its authenticity is backed by the blockchain record we just created."
+> "This is the digital employee ID card shown in the application. The important point is that its authenticity is backed by the blockchain record we just created."
 
 ---
 
@@ -462,10 +462,10 @@ In the browser:
 
 Go to the public verification page at `http://localhost:3000/verify`.
 
-Enter the student ID and verify it.
+Enter the employee ID and verify it.
 
 **What to say:**
-> "Anyone with the student ID or QR-based verification link can check if the card is valid. The system checks the blockchain-backed record to confirm authenticity."
+> "Anyone with the employee ID or QR-based verification link can check if the card is valid. The system checks the blockchain-backed record to confirm authenticity."
 
 This connects the technical blockchain part to the practical use case.
 
@@ -475,7 +475,7 @@ This connects the technical blockchain part to the practical use case.
 
 Use this exact order:
 
-1. Show student list in the app
+1. Show employee list in the app
 2. Show `getTotalCards()` before issuance in Hardhat console
 3. Issue card from app
 4. Show Hardhat node terminal transaction output
@@ -492,7 +492,7 @@ This is the most complete flow.
 ## 5. What Each Part Proves
 
 ### App UI
-- Proves: the system is usable, admin/student features work
+- Proves: the system is usable, admin/employee features work
 
 ### Hardhat Node Terminal
 - Proves: a real blockchain transaction occurred
@@ -525,7 +525,7 @@ This is the most complete flow.
 
 ## 8. What to Say If the Teacher Asks "What Is the Benefit of Blockchain Here?"
 
-> "The benefit is tamper resistance and verifiable authenticity. Once the student card record is written to the blockchain, it becomes much harder to alter secretly. Anyone can verify whether a student ID card is genuine."
+> "The benefit is tamper resistance and verifiable authenticity. Once the employee card record is written to the blockchain, it becomes much harder to alter secretly. Anyone can verify whether a employee ID card is genuine."
 
 ---
 
@@ -533,13 +533,13 @@ This is the most complete flow.
 
 You can read this during the demo:
 
-> "This is my Blockchain-Based Student ID Card System. The application allows an admin to manage student records and issue digital ID cards.
+> "This is my Blockchain-Based Employee ID Card System. The application allows an admin to manage employee records and issue digital ID cards.
 >
-> First, I will show the student list in the application.
+> First, I will show the employee list in the application.
 >
 > Now I will check the smart contract directly to see the current number of issued cards on-chain.
 >
-> Next, I issue a card for a student.
+> Next, I issue a card for a employee.
 >
 > As soon as I do that, the Hardhat blockchain terminal shows a new transaction being mined.
 >
@@ -549,7 +549,7 @@ You can read this during the demo:
 >
 > Then I query the smart contract again, and the number of issued cards has increased.
 >
-> Finally, I verify the student card using the blockchain record, which proves the card can be authenticated through the smart contract."
+> Finally, I verify the employee card using the blockchain record, which proves the card can be authenticated through the smart contract."
 
 ---
 
@@ -562,7 +562,7 @@ Make sure these are ready:
 - [ ] Frontend is open (`http://localhost:3000`)
 - [ ] Backend is running
 - [ ] Hardhat console is open (optional)
-- [ ] At least one student record exists
+- [ ] At least one employee record exists
 - [ ] You know the exact commands:
   - `await contract.verifyStudentCard("STUDENT_ID")`
   - `await contract.getTotalCards()`
