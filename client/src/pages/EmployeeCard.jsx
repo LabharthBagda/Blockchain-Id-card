@@ -78,7 +78,7 @@ function StudentCard() {
       <Sidebar />
       <div className="flex-1 p-8">
         <div className="mb-6">
-          <Link to="/students" className="text-neon-400 hover:text-neon-300 text-sm">
+          <Link to="/employees" className="text-neon-400 hover:text-neon-300 text-sm">
             ← Back to Registry
           </Link>
         </div>

@@ -28,7 +28,7 @@ function IssueCard() {
 
   const handleIssue = async () => {
     if (!selectedStudent) {
-      setMessage({ type: 'error', text: 'Please select a student' });
+      setMessage({ type: 'error', text: 'Select a student first' });
       return;
     }
 
@@ -36,11 +36,11 @@ function IssueCard() {
     setMessage({ type: '', text: '' });
 
     try {
-      const response = await api.post('/cards/issue', { studentId: selectedStudent });
-      setMessage({ type: 'success', text: 'Card issued successfully!' });
+      await api.post('/cards/issue', { studentId: selectedStudent });
+      setMessage({ type: 'success', text: 'ID minted successfully on chain' });
       setTimeout(() => navigate(`/cards/view/${selectedStudent}`), 1500);
     } catch (error) {
-      setMessage({ type: 'error', text: error.response?.data?.error || 'Failed to issue card' });
+      setMessage({ type: 'error', text: error.response?.data?.error || 'Mint failed' });
     } finally {
       setIssuing(false);
     }
@@ -53,51 +53,50 @@ function IssueCard() {
       <Sidebar />
       <div className="flex-1 p-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-800">Issue Student Card</h1>
-          <p className="text-gray-600">Issue a new blockchain-based student ID card</p>
+          <h1 className="text-2xl font-semibold text-zinc-100">Mint ID</h1>
+          <p className="text-surface-500 mt-1">Issue blockchain-verifiable credential</p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div className="bg-white rounded-xl p-6 shadow-lg">
-            <h2 className="text-xl font-bold text-gray-800 mb-4">Select Student</h2>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="glass-card p-5">
+            <h2 className="text-sm font-medium text-zinc-300 mb-4 uppercase tracking-wider">Select Credential</h2>
 
             {loading ? (
-              <div className="flex items-center justify-center h-64">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+              <div className="flex items-center justify-center h-48">
+                <div className="w-8 h-8 border-2 border-neon-500/30 border-t-neon-500 rounded-full animate-spin"></div>
               </div>
             ) : students.length === 0 ? (
               <div className="text-center py-8">
-                <p className="text-gray-500 mb-4">No students available</p>
+                <div className="text-surface-500 mb-3">No credentials available</div>
                 <button
                   onClick={() => navigate('/students/add')}
-                  className="text-blue-600 hover:text-blue-800"
+                  className="text-neon-400 hover:text-neon-300"
                 >
-                  Add a student first
+                  Register first →
                 </button>
               </div>
             ) : (
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Choose a student to issue card
-                  </label>
                   <select
                     value={selectedStudent}
                     onChange={(e) => setSelectedStudent(e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="input-field"
                   >
-                    <option value="">Select Student</option>
+                    <option value="">Choose student</option>
                     {students.map((student) => (
                       <option key={student._id} value={student.studentId}>
-                        {student.fullName} ({student.studentId})
+                        {student.fullName} — {student.studentId}
                       </option>
                     ))}
                   </select>
                 </div>
 
                 {message.text && (
-                  <div className={`px-4 py-3 rounded-lg ${
-                    message.type === 'success' ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'
+                  <div className={`px-4 py-3 rounded-lg text-sm ${
+                    message.type === 'success' 
+                      ? 'bg-green-500/10 border border-green-500/30 text-green-400' 
+                      : 'bg-red-500/10 border border-red-500/30 text-red-400'
                   }`}>
                     {message.text}
                   </div>
@@ -106,46 +105,46 @@ function IssueCard() {
                 <button
                   onClick={handleIssue}
                   disabled={!selectedStudent || issuing}
-                  className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full btn-primary"
                 >
-                  {issuing ? 'Issuing Card...' : 'Issue Card'}
+                  {issuing ? 'Minting...' : 'Mint to Chain ◆'}
                 </button>
               </div>
             )}
           </div>
 
           {selectedStudentData && (
-            <div className="bg-white rounded-xl p-6 shadow-lg">
-              <h2 className="text-xl font-bold text-gray-800 mb-4">Preview</h2>
-              <div className="bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl p-6 text-white">
+            <div className="glass-card p-5">
+              <h2 className="text-sm font-medium text-zinc-300 mb-4 uppercase tracking-wider">Preview</h2>
+              <div className="bg-gradient-to-br from-surface-800 to-surface-900 rounded-xl p-5 border border-surface-700">
                 <div className="text-center mb-4">
-                  <p className="text-sm opacity-75">OFFICIAL STUDENT ID</p>
+                  <p className="text-xs text-surface-500 uppercase tracking-widest">Digital ID</p>
                 </div>
-                <div className="bg-white rounded-lg p-4 mb-4">
+                <div className="bg-surface-800 rounded-lg p-4 mb-4">
                   {selectedStudentData.profilePhotoUrl ? (
                     <img
                       src={selectedStudentData.profilePhotoUrl}
                       alt={selectedStudentData.fullName}
-                      className="w-24 h-24 mx-auto rounded-lg object-cover"
+                      className="w-20 h-20 mx-auto rounded-lg object-cover"
                     />
                   ) : (
-                    <div className="w-24 h-24 mx-auto bg-gray-200 rounded-lg flex items-center justify-center">
-                      <span className="text-4xl text-gray-400">👤</span>
+                    <div className="w-20 h-20 mx-auto bg-surface-700 rounded-lg flex items-center justify-center">
+                      <span className="text-3xl text-surface-500">◇</span>
                     </div>
                   )}
                 </div>
                 <div className="text-center">
-                  <h3 className="text-xl font-bold">{selectedStudentData.fullName}</h3>
-                  <p className="text-lg opacity-90">{selectedStudentData.studentId}</p>
+                  <h3 className="font-semibold text-zinc-100">{selectedStudentData.fullName}</h3>
+                  <p className="text-sm text-neon-400 mt-1 font-mono">{selectedStudentData.studentId}</p>
                 </div>
-                <div className="mt-4 grid grid-cols-2 gap-2 text-sm">
+                <div className="mt-4 grid grid-cols-2 gap-3 text-xs">
                   <div>
-                    <p className="opacity-75">Department</p>
-                    <p className="font-medium">{selectedStudentData.department}</p>
+                    <p className="text-surface-500">Dept</p>
+                    <p className="text-zinc-300">{selectedStudentData.department}</p>
                   </div>
                   <div>
-                    <p className="opacity-75">Course</p>
-                    <p className="font-medium">{selectedStudentData.course}</p>
+                    <p className="text-surface-500">Course</p>
+                    <p className="text-zinc-300">{selectedStudentData.course}</p>
                   </div>
                 </div>
               </div>

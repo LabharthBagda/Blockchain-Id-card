@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import api from '../utils/api';
 
-function AddStudent() {
+function AddEmployee() {
   const [formData, setFormData] = useState({
     studentId: '',
     fullName: '',
@@ -30,7 +30,7 @@ function AddStudent() {
     try {
       await api.post('/students', formData);
       setSuccess('Credential registered successfully');
-      setTimeout(() => navigate('/students'), 1500);
+      setTimeout(() => navigate('/employees'), 1500);
     } catch (err) {
       setError(err.response?.data?.error || 'Registration failed');
     } finally {
@@ -38,9 +38,9 @@ function AddStudent() {
     }
   };
 
-  const departments = ['Computer Science', 'Information Technology', 'Electronics', 'Mechanical', 'Civil', 'Electrical'];
-  const courses = ['B.Tech', 'M.Tech', 'B.Sc', 'M.Sc'];
-  const years = ['1st Year', '2nd Year', '3rd Year', '4th Year', '5th Year'];
+  const departments = ['Engineering', 'Human Resources', 'Finance', 'Marketing', 'Operations', 'Sales', 'IT Support'];
+  const courses = ['Manager', 'Senior Lead', 'Junior Associate', 'Intern', 'Contractor'];
+  const years = ['2024', '2023', '2022', '2021', '2020'];
 
   return (
     <div className="flex">
@@ -48,7 +48,7 @@ function AddStudent() {
       <div className="flex-1 p-8">
         <div className="mb-8">
           <h1 className="text-2xl font-semibold text-zinc-100">Register</h1>
-          <p className="text-surface-500 mt-1">Add new student credential</p>
+          <p className="text-surface-500 mt-1">Add new employee credential</p>
         </div>
 
         <div className="glass-card p-6 max-w-2xl">
@@ -66,14 +66,14 @@ function AddStudent() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs text-surface-400 mb-2 uppercase tracking-wider">Student ID</label>
+                <label className="block text-xs text-surface-400 mb-2 uppercase tracking-wider">Employee ID</label>
                 <input
                   type="text"
                   name="studentId"
                   value={formData.studentId}
                   onChange={handleChange}
                   className="input-field"
-                  placeholder="STU2024001"
+                  placeholder="EMP2024001"
                   required
                 />
               </div>
@@ -108,7 +108,7 @@ function AddStudent() {
               </div>
 
               <div>
-                <label className="block text-xs text-surface-400 mb-2 uppercase tracking-wider">Course</label>
+                <label className="block text-xs text-surface-400 mb-2 uppercase tracking-wider">Position</label>
                 <select
                   name="course"
                   value={formData.course}
@@ -116,7 +116,7 @@ function AddStudent() {
                   className="input-field"
                   required
                 >
-                  <option value="">Select Course</option>
+                  <option value="">Select Position</option>
                   {courses.map((course) => (
                     <option key={course} value={course}>{course}</option>
                   ))}
@@ -166,4 +166,4 @@ function AddStudent() {
   );
 }
 
-export default AddStudent;
+export default AddEmployee;

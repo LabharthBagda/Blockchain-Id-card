@@ -27,39 +27,49 @@ function Dashboard() {
   };
 
   const statCards = [
-    { label: 'Total Students', value: stats.totalStudents, icon: '👨‍🎓', color: 'bg-blue-500' },
-    { label: 'Total Issued Cards', value: stats.totalIssuedCards, icon: '💳', color: 'bg-green-500' },
-    { label: 'Active Cards', value: stats.activeCards, icon: '✅', color: 'bg-emerald-500' },
-    { label: 'Revoked Cards', value: stats.revokedCards, icon: '❌', color: 'bg-red-500' },
+    { label: 'Total Employees', value: stats.totalStudents, icon: '◈', color: 'neon' },
+    { label: 'Minted IDs', value: stats.totalIssuedCards, icon: '◆', color: 'accent' },
+    { label: 'Active', value: stats.activeCards, icon: '◇', color: 'green' },
+    { label: 'Revoked', value: stats.revokedCards, icon: '▣', color: 'red' },
   ];
+
+  const getColorClass = (color) => {
+    switch(color) {
+      case 'neon': return 'text-neon-400 bg-neon-500/10 border-neon-500/30';
+      case 'accent': return 'text-accent-400 bg-accent-500/10 border-accent-500/30';
+      case 'green': return 'text-green-400 bg-green-500/10 border-green-500/30';
+      case 'red': return 'text-red-400 bg-red-500/10 border-red-500/30';
+      default: return '';
+    }
+  };
 
   return (
     <div className="flex">
       <Sidebar />
       <div className="flex-1 p-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-800">Admin Dashboard</h1>
-          <p className="text-gray-600">Welcome back! Here's an overview of your system.</p>
+          <h1 className="text-2xl font-semibold text-zinc-100">Overview</h1>
+          <p className="text-surface-500 mt-1">System status and metrics</p>
         </div>
 
         {loading ? (
           <div className="flex items-center justify-center h-64">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+            <div className="w-8 h-8 border-2 border-neon-500/30 border-t-neon-500 rounded-full animate-spin"></div>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {statCards.map((card, index) => (
               <div
                 key={index}
-                className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow"
+                className="glass-card p-5"
               >
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between mb-3">
                   <div>
-                    <p className="text-sm text-gray-500 mb-1">{card.label}</p>
-                    <p className="text-3xl font-bold text-gray-800">{card.value}</p>
+                    <p className="text-xs text-surface-400 uppercase tracking-wider">{card.label}</p>
+                    <p className="text-3xl font-semibold text-zinc-100 mt-1">{card.value}</p>
                   </div>
-                  <div className={`${card.color} p-4 rounded-xl`}>
-                    <span className="text-2xl">{card.icon}</span>
+                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center border ${getColorClass(card.color)}`}>
+                    <span className="text-xl">{card.icon}</span>
                   </div>
                 </div>
               </div>
@@ -67,29 +77,29 @@ function Dashboard() {
           </div>
         )}
 
-        <div className="mt-8 bg-white rounded-xl p-6 shadow-lg">
-          <h2 className="text-xl font-bold text-gray-800 mb-4">How It Works</h2>
+        <div className="mt-8 glass-card p-6">
+          <h2 className="text-lg font-semibold text-zinc-100 mb-4">System Flow</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="text-center p-4">
-              <div className="inline-block p-3 bg-blue-100 rounded-full mb-3">
-                <span className="text-2xl">1️⃣</span>
+              <div className="w-12 h-12 mx-auto mb-3 bg-neon-500/10 border border-neon-500/30 rounded-xl flex items-center justify-center">
+                <span className="text-neon-400 text-xl">①</span>
               </div>
-              <h3 className="font-semibold text-gray-800 mb-2">Add Students</h3>
-              <p className="text-sm text-gray-600">Register student information in the system</p>
+              <h3 className="font-medium text-zinc-200">Register Employee</h3>
+              <p className="text-sm text-surface-500 mt-1">Add credentials to the system</p>
             </div>
             <div className="text-center p-4">
-              <div className="inline-block p-3 bg-green-100 rounded-full mb-3">
-                <span className="text-2xl">2️⃣</span>
+              <div className="w-12 h-12 mx-auto mb-3 bg-accent-500/10 border border-accent-500/30 rounded-xl flex items-center justify-center">
+                <span className="text-accent-400 text-xl">②</span>
               </div>
-              <h3 className="font-semibold text-gray-800 mb-2">Issue ID Cards</h3>
-              <p className="text-sm text-gray-600">Issue digital ID cards stored on blockchain</p>
+              <h3 className="font-medium text-zinc-200">Mint on Chain</h3>
+              <p className="text-sm text-surface-500 mt-1">Issue verifiable ID tokens</p>
             </div>
             <div className="text-center p-4">
-              <div className="inline-block p-3 bg-purple-100 rounded-full mb-3">
-                <span className="text-2xl">3️⃣</span>
+              <div className="w-12 h-12 mx-auto mb-3 bg-green-500/10 border border-green-500/30 rounded-xl flex items-center justify-center">
+                <span className="text-green-400 text-xl">③</span>
               </div>
-              <h3 className="font-semibold text-gray-800 mb-2">Verify Authenticity</h3>
-              <p className="text-sm text-gray-600">Anyone can verify card authenticity</p>
+              <h3 className="font-medium text-zinc-200">Verify</h3>
+              <p className="text-sm text-surface-500 mt-1">Anyone can audit authenticity</p>
             </div>
           </div>
         </div>

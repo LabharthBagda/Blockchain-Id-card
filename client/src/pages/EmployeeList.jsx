@@ -3,30 +3,30 @@ import { Link } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import api from '../utils/api';
 
-function StudentList() {
-  const [students, setStudents] = useState([]);
+function EmployeeList() {
+  const [employees, setEmployees] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    fetchStudents();
+    fetchEmployees();
   }, []);
 
-  const fetchStudents = async () => {
+  const fetchEmployees = async () => {
     try {
       const response = await api.get('/students');
-      setStudents(response.data.students);
+      setEmployees(response.data.students);
     } catch (error) {
-      console.error('Error fetching students:', error);
+      console.error('Error fetching employees:', error);
     } finally {
       setLoading(false);
     }
   };
 
-  const filteredStudents = students.filter(student =>
-    student.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    student.studentId.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    student.department.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredEmployees = employees.filter(employee =>
+    employee.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    employee.studentId.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    employee.department.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -36,10 +36,10 @@ function StudentList() {
         <div className="mb-8 flex justify-between items-center">
           <div>
             <h1 className="text-2xl font-semibold text-zinc-100">Registry</h1>
-            <p className="text-surface-500 mt-1">Manage student credentials</p>
+            <p className="text-surface-500 mt-1">Manage employee credentials</p>
           </div>
           <Link
-            to="/students/add"
+            to="/employees/add"
             className="btn-primary flex items-center gap-2"
           >
             <span>＋</span>
@@ -62,7 +62,7 @@ function StudentList() {
             <div className="flex items-center justify-center h-64">
               <div className="w-8 h-8 border-2 border-neon-500/30 border-t-neon-500 rounded-full animate-spin"></div>
             </div>
-          ) : filteredStudents.length === 0 ? (
+          ) : filteredEmployees.length === 0 ? (
             <div className="text-center py-12">
               <div className="text-4xl text-surface-600 mb-3">◇</div>
               <p className="text-surface-500">No records found</p>
@@ -75,22 +75,22 @@ function StudentList() {
                     <th className="px-6 py-3 text-left text-xs font-medium text-surface-400 uppercase tracking-wider">ID</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-surface-400 uppercase tracking-wider">Name</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-surface-400 uppercase tracking-wider">Department</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-surface-400 uppercase tracking-wider">Course</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-surface-400 uppercase tracking-wider">Position</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-surface-400 uppercase tracking-wider">Year</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-surface-400 uppercase tracking-wider">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-surface-700">
-                  {filteredStudents.map((student) => (
-                    <tr key={student._id} className="hover:bg-surface-800/30 transition-colors">
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-neon-400">{student.studentId}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-300">{student.fullName}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-400">{student.department}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-400">{student.course}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-400">{student.year}</td>
+                  {filteredEmployees.map((employee) => (
+                    <tr key={employee._id} className="hover:bg-surface-800/30 transition-colors">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-neon-400">{employee.studentId}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-300">{employee.fullName}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-400">{employee.department}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-400">{employee.course}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-400">{employee.year}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm">
                         <Link
-                          to={`/cards/view/${student.studentId}`}
+                          to={`/cards/view/${employee.studentId}`}
                           className="text-neon-400 hover:text-neon-300 transition-colors"
                         >
                           View →
@@ -108,4 +108,4 @@ function StudentList() {
   );
 }
 
-export default StudentList;
+export default EmployeeList;

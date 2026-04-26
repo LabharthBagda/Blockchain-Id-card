@@ -1,10 +1,10 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
-import AddStudent from './pages/AddStudent';
-import StudentList from './pages/StudentList';
+import AddEmployee from './pages/AddEmployee';
+import EmployeeList from './pages/EmployeeList';
 import IssueCard from './pages/IssueCard';
-import StudentCard from './pages/StudentCard';
+import EmployeeCard from './pages/EmployeeCard';
 import Verify from './pages/Verify';
 import BlockchainTerminal from './pages/BlockchainTerminal';
 import Transactions from './pages/Transactions';
@@ -15,18 +15,20 @@ function App() {
 
   return (
     <Router>
-      <Routes>
-        <Route path="/login" element={token ? <Navigate to="/dashboard" /> : <Login />} />
-        <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
-        <Route path="/students/add" element={<PrivateRoute><AddStudent /></PrivateRoute>} />
-        <Route path="/students" element={<PrivateRoute><StudentList /></PrivateRoute>} />
-        <Route path="/cards/issue" element={<PrivateRoute><IssueCard /></PrivateRoute>} />
-        <Route path="/cards/view/:studentId" element={<PrivateRoute><StudentCard /></PrivateRoute>} />
-        <Route path="/verify" element={<Verify />} />
-        <Route path="/blockchain/terminal" element={<PrivateRoute><BlockchainTerminal /></PrivateRoute>} />
-        <Route path="/blockchain/transactions" element={<PrivateRoute><Transactions /></PrivateRoute>} />
-        <Route path="/" element={<Navigate to="/login" />} />
-      </Routes>
+      <div className="min-h-screen bg-surface-950 font-display">
+        <Routes>
+          <Route path="/login" element={token ? <Navigate to="/dashboard" /> : <Login />} />
+          <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+          <Route path="/employees/add" element={<PrivateRoute><AddEmployee /></PrivateRoute>} />
+          <Route path="/employees" element={<PrivateRoute><EmployeeList /></PrivateRoute>} />
+          <Route path="/cards/issue" element={<PrivateRoute><IssueCard /></PrivateRoute>} />
+          <Route path="/cards/view/:employeeId" element={<PrivateRoute><EmployeeCard /></PrivateRoute>} />
+          <Route path="/verify" element={<Verify />} />
+          <Route path="/blockchain/terminal" element={<PrivateRoute><BlockchainTerminal /></PrivateRoute>} />
+          <Route path="/blockchain/transactions" element={<PrivateRoute><Transactions /></PrivateRoute>} />
+          <Route path="/" element={<Navigate to="/login" />} />
+        </Routes>
+      </div>
     </Router>
   );
 }

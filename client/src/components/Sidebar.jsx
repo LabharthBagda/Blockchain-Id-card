@@ -4,13 +4,13 @@ function Sidebar() {
   const location = useLocation();
   
   const menuItems = [
-    { path: '/dashboard', label: 'Dashboard', icon: '📊' },
-    { path: '/students', label: 'Students', icon: '👨‍🎓' },
-    { path: '/students/add', label: 'Add Student', icon: '➕' },
-    { path: '/cards/issue', label: 'Issue Card', icon: '💳' },
-    { path: '/verify', label: 'Verify', icon: '✅' },
-    { path: '/blockchain/terminal', label: 'Terminal', icon: '⌨️' },
-    { path: '/blockchain/transactions', label: 'Transactions', icon: '📜' },
+    { path: '/dashboard', label: 'Overview', icon: '◈' },
+    { path: '/employees', label: 'Employees', icon: '◇' },
+    { path: '/employees/add', label: 'Register', icon: '＋' },
+    { path: '/cards/issue', label: 'Mint ID', icon: '◆' },
+    { path: '/verify', label: 'Verify', icon: '◎' },
+    { path: '/blockchain/terminal', label: 'Terminal', icon: '▸' },
+    { path: '/blockchain/transactions', label: 'Activity', icon: '▹' },
   ];
 
   const handleLogout = () => {
@@ -19,35 +19,44 @@ function Sidebar() {
   };
 
   return (
-    <div className="w-64 bg-gray-900 text-white min-h-screen p-4">
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-center text-blue-400">Student ID</h1>
-        <p className="text-sm text-gray-400 text-center">Blockchain System</p>
+    <div className="w-64 bg-surface-900 border-r border-surface-700 min-h-screen flex flex-col">
+      <div className="p-6 border-b border-surface-700">
+        <div className="flex items-center gap-2 mb-1">
+          <span className="text-neon-400 text-xl">⬡</span>
+          <h1 className="text-lg font-semibold tracking-tight">CertChain</h1>
+        </div>
+        <p className="text-xs text-surface-500 ml-6">Employee Credentials</p>
       </div>
       
-      <nav className="space-y-2">
-        {menuItems.map((item) => (
-          <Link
-            key={item.path}
-            to={item.path}
-            className={`block px-4 py-3 rounded-lg transition-colors ${
-              location.pathname === item.path
-                ? 'bg-blue-600 text-white'
-                : 'text-gray-300 hover:bg-gray-800'
-            }`}
-          >
-            <span className="mr-3">{item.icon}</span>
-            {item.label}
-          </Link>
-        ))}
+      <nav className="flex-1 p-4 space-y-1">
+        {menuItems.map((item) => {
+          const isActive = location.pathname === item.path;
+          return (
+            <Link
+              key={item.path}
+              to={item.path}
+              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-150 ${
+                isActive
+                  ? 'bg-neon-500/10 text-neon-400 border border-neon-500/30'
+                  : 'text-zinc-400 hover:text-zinc-200 hover:bg-surface-800'
+              }`}
+            >
+              <span className={`text-sm ${isActive ? 'text-neon-400' : 'text-surface-500'}`}>{item.icon}</span>
+              <span className="text-sm font-medium">{item.label}</span>
+            </Link>
+          );
+        })}
       </nav>
 
-      <button
-        onClick={handleLogout}
-        className="w-full mt-8 px-4 py-3 bg-red-600 hover:bg-red-700 rounded-lg transition-colors"
-      >
-        🚪 Logout
-      </button>
+      <div className="p-4 border-t border-surface-700">
+        <button
+          onClick={handleLogout}
+          className="w-full flex items-center justify-center gap-2 px-3 py-2.5 text-zinc-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all duration-150"
+        >
+          <span className="text-sm">⬏</span>
+          <span className="text-sm font-medium">Sign Out</span>
+        </button>
+      </div>
     </div>
   );
 }
